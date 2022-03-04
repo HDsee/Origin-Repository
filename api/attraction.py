@@ -1,17 +1,29 @@
 from flask import *
 import mysql.connector
 
+# db = mysql.connector.connect(
+#     host='localhost',
+#     port='3306',
+#     user='abc',
+#     password='abc',
+#     database='taipeidata'
+# )
 
-db = mysql.connector.connect(
-    host='localhost',
-    port='3306',
-    user='abc',
-    password='abc',
-    database='taipeidata'
-)
+from mysql.connector import pooling
+
+
+connection_pool = pooling.MySQLConnectionPool(pool_name="db",
+                                            pool_size=10,
+                                            pool_reset_session=True,
+                                            host='localhost',
+                                            database='taipeidata',
+                                            user='abc',
+                                            password='abc')
+
+
 
 #dictionary轉換成字典
-cursor = db.cursor(dictionary=True)
+# cursor = db.cursor(dictionary=True)
 
 attractionApi = Blueprint( 'attractionApi', __name__)
 
@@ -20,9 +32,11 @@ attractionApi = Blueprint( 'attractionApi', __name__)
 @attractionApi.route('/attractions')
 def api_attractions():
     try :
+        db=connection_pool.get_connection()
+        cursor=db.cursor(dictionary=True)
         page = int(request.args.get('page'))
         first_page = page * 12
-        next_page = first_page + 1
+        next_page = page + 1
         if request.args.get('keyword'):
             keyword = request.args.get('keyword')
             cursor.execute('select * from `attraction` where name like %s limit %s,%s',('%' + keyword + '%',first_page,12))
@@ -53,11 +67,16 @@ def api_attractions():
 			"error": True,
 			"message": "伺服器內部錯誤"
 		}, 500
+    finally:
+        cursor.close()
+        db.close()
 
 #景點編號取得資料列表
 @attractionApi.route('/attraction/<int:attractionId>')
 def api_attractionId(attractionId):
     try:
+            db=connection_pool.get_connection()
+            cursor=db.cursor(dictionary=True)
             if attractionId:
                 cursor.execute('select * from `attraction` where id=%s',(attractionId,))
                 attraction_list = cursor.fetchall()
@@ -76,7 +95,10 @@ def api_attractionId(attractionId):
         return {
             "error": True,
             "message": "伺服器內部錯誤"
-        }, 500	
+        }, 500
+    finally:
+        cursor.close()
+        db.close()	
     
 
 
