@@ -7,8 +7,7 @@ db = mysql.connector.connect(
     port='3306',
     user='root',
     password='root',
-    database='taipeidata',
-    auth_plugin='mysql_native_password'
+    database='taipeidata'
 )
 
 #dictionary轉換成字典
