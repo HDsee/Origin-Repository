@@ -30,7 +30,6 @@ for i in range(data_length):
         if img_data == '.jpg' or img_data == '.JPG' or img_data == '.png':
             img_url = 'https:'+imgs[j]
             img_list.append(img_url)
-            print(img_list)
     sql = 'INSERT INTO attraction (name, category, description, address, transport, mrt, latitude, longitude, images) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
     val = (place['stitle'], place['CAT2'], place['xbody'], place['address'], place['info'], place['MRT'], 
             place['latitude'], place['longitude'], json.dumps(img_list))

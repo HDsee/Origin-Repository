@@ -42,11 +42,12 @@ def api_attractions():
             cursor.execute('select * from `attraction` where name like %s limit %s,%s',('%' + keyword + '%',first_page,12))
             attraction_list = cursor.fetchall()
             if attraction_list:
-                attraction_list[0]["images"] = eval(attraction_list[0]["images"])#用eval把字串轉換成list
                 cursor.execute('select * from `attraction` where name like %s limit %s,%s',('%' + keyword + '%',first_page+12,12))
                 next_list = cursor.fetchall()
                 if len(next_list)== 0:
                     next_page = None
+                for i in range (0,len(attraction_list)):
+                    attraction_list[i]["images"] = eval(attraction_list[i]["images"])#用eval把字串轉換成list
                 attractions = {
                     "nextPage":next_page,
                     "data":attraction_list
@@ -56,7 +57,12 @@ def api_attractions():
             cursor.execute('select * from `attraction` limit %s,%s',(first_page,12))
             attraction_list = cursor.fetchall()
             if attraction_list:
-                attraction_list[0]["images"] = eval(attraction_list[0]["images"])#用eval把字串轉換成list
+                cursor.execute('select * from `attraction` limit %s,%s',(first_page+12,12))
+                next_list = cursor.fetchall()
+                if len(next_list)== 0:
+                    next_page = None
+                for i in range (0,len(attraction_list)):
+                    attraction_list[i]["images"] = eval(attraction_list[i]["images"])#用eval把字串轉換成list
                 attractions = {
                     "nextPage":next_page,
                     "data": attraction_list
