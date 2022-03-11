@@ -1,0 +1,241 @@
+html {
+    box-sizing: border-box;
+    height: 100%;
+}
+
+button{
+    background: none;
+    border: none;
+    outline: none;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    font-family: 'Noto Sans TC';
+}
+
+nav{
+    display: grid;
+    grid-template-columns: 1fr 1200px 1fr;
+}
+
+.top{
+    display: grid;
+    grid-template-columns: 1fr 84px 91px;
+}
+
+.webname{
+    width: 150px;
+    font-weight: 700;
+    font-size: 30px;
+    font-style: normal;
+    line-height: 34px;
+    margin:10px 0px ;
+    text-decoration: none;
+    color: #448899;
+}
+
+.book{
+    width: 64px;
+    font-weight: 400;
+    font-size: 16px;
+    font-style: normal;
+    margin:20px 10px ;
+    text-align: center;
+    line-height: 14px;
+    text-decoration: none;
+    color: #666666;
+    justify-content:center;
+}
+
+.signin{
+    width: 71px;
+    font-weight: 400;
+    font-size: 16px;
+    font-style: normal;
+    margin:20px 10px ;
+    text-align: center;
+    line-height: 14px;
+    text-decoration: none;
+    color: #666666;
+    cursor: pointer;
+    justify-content:center;
+}
+
+.main-contain{
+    min-height: calc(100% - 54px - 104px);
+}
+
+.slogan{
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
+    padding:75px 0px;
+    overflow: hidden;
+
+}
+
+.slogan>div{
+    position: relative;/*原本位置的相對位置*/
+    z-index: 1;
+    width: 1200px;
+    margin: 0px auto;
+    padding: 10px;
+    height: 170px;
+}
+
+.slogan>div>div{
+    margin-bottom: 25px;
+}
+
+.slogan h3{
+    font-size: 28px;
+    height: 41px;
+    color: #F8F8F8;
+    margin-bottom: 15px;
+}
+
+.slogan p{
+    font-size: 16px;
+    height: 22px;
+    color: #F8F8F8;
+}
+
+.slogan form{
+    display: flex;
+}
+
+.slogan input{
+    background: #FFFFFF;
+    padding: 15px;
+    width: 400px;
+    border: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+.slogan button{
+    background: #448899;
+    padding: 8px 15px;
+    border: 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.slogan button>i{
+    font-size: 30px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.slogan-img{
+    position: absolute;/* 整個框的絕對位置 */
+    z-index: 0;
+    width: 650px;
+    left: calc(57% - 57px);
+    bottom: 0;
+    overflow: hidden;
+}
+
+footer{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 104px;
+    color: #ffffff;
+    background-color: #757575;
+    text-align: center;
+}
+
+main{
+    width: 1200px;
+    margin: 40px auto;
+    padding: 15px;
+    display: grid;
+    grid-gap: 30px; /*格子跟格子的間距*/
+    grid-template-columns: repeat(4, minmax(0, 1fr));/* 一行切四欄，高度最小0最高1fr */
+}
+main .img-location{
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    padding-bottom: 12px;
+}
+
+.img-base{
+    position: relative;
+    display: block;
+    cursor: pointer;/*游標變成手指*/
+    padding-top: 60%;
+    width: 100%;
+    position: relative;
+}
+.img-base:hover{
+    opacity: 0.5;
+}
+.img-base>img{
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;/* 填滿元素的寬度及高度(維持原比例) */
+    display: block;
+    border-radius: 5px 5px 0 0;
+}
+
+.img-location>.img-name{
+    display: block;
+    /* min-width: 100%; */
+    max-width: fit-content;
+    text-decoration: none;
+    margin: 9px 10px 15px 10px;
+    font-weight: 700;
+    color: #757575;
+    overflow: hidden;/*超出的內容隱藏*/
+    text-overflow : ellipsis;/*只顯示一行文字*/
+    white-space: nowrap;/*強制不換行*/
+}
+.img-info{
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-between;/* 平均排列每個元素，第一個放最前面，最後一個放最後面*/
+}
+.img-info>p{
+    color: #757575;
+}
+
+@media (max-width:1200px){
+    nav{
+        grid-template-columns: 1fr;
+    }
+    .slogan>div{
+        width: calc(100% - 20px);
+    }
+    .slogan input{
+        width: calc(20% + 150px);
+    }
+    .slogan-img{
+        width: calc(45% + 150px);
+    }
+
+    main{
+        width: 90%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width:600px){
+    nav{
+        grid-template-columns: 1fr;
+    }
+    main{
+        grid-template-columns: 1fr;
+    }
+}
