@@ -108,7 +108,7 @@ main{
 .info-contain{
     display: flex;
     width: 100%;
-    padding: 0 15px;
+    padding: 0 0px;
     justify-content: space-between;    
 }
 
@@ -286,13 +286,16 @@ main{
     margin: 40px 0;
     padding: 10px;
 }
+
 .info>*{
     margin-bottom: 20px;
 }
+
 .info p{
     text-align: justify;
     line-height: 180%;
 }
+
 .info .title{
     font-weight: bold;
 }
@@ -312,7 +315,7 @@ main{
     .booking-info{
         flex-wrap: wrap;
         width: 100%;
-        padding: 0;
+        padding: 0 10px;
     }
     .img-location{
         width: 100%;
