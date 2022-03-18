@@ -1,0 +1,336 @@
+html {
+    box-sizing: border-box;
+    height: 100%;
+}
+
+button{
+    background: none;
+    border: none;
+    outline: none;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    font-family: 'Noto Sans TC';
+}
+
+nav{
+    display: grid;
+    grid-template-columns: 1fr 1200px 1fr;
+}
+
+.top{
+    display: grid;
+    grid-template-columns: 1fr 84px 91px;
+}
+
+.webname{
+    width: 150px;
+    font-weight: 700;
+    font-size: 30px;
+    font-style: normal;
+    line-height: 34px;
+    margin:10px 0px ;
+    text-decoration: none;
+    color: #448899;
+}
+
+.book{
+    width: 64px;
+    font-weight: 400;
+    font-size: 16px;
+    font-style: normal;
+    margin:20px 10px ;
+    text-align: center;
+    line-height: 14px;
+    text-decoration: none;
+    color: #666666;
+    justify-content:center;
+}
+
+.signin{
+    width: 71px;
+    font-weight: 400;
+    font-size: 16px;
+    font-style: normal;
+    margin:20px 10px ;
+    text-align: center;
+    line-height: 14px;
+    text-decoration: none;
+    color: #666666;
+    cursor: pointer;
+    justify-content:center;
+}
+
+footer{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 104px;
+    color: #ffffff;
+    background-color: #757575;
+    text-align: center;
+}
+
+h3, p, label, span{
+    color: #666666;
+}
+.up-seperator{
+    width: 100%;
+    height: 1px;
+    margin: 0;
+    background-color: #e8e8e8;
+}
+
+.seperator{
+    width: 100%;
+    height: 1px;
+    margin: 40px 0;
+    background-color: #e8e8e8;
+}
+
+
+main{
+    min-height: calc(100% - 54px - 104px);
+    width: 1200px;
+    margin:37px auto 120px;
+}
+
+/* 以下輪播圖 */
+/* 包全部 */
+.info-contain{
+    display: flex;
+    width: 100%;
+    padding: 0 15px;
+    justify-content: space-between;    
+}
+
+/* 放圖的位置跟大小 */
+.img-location{
+    position: relative;
+    width: 540px;
+    height: 406px;
+    border-radius: 5px;
+}
+/* 包圖片 */
+.img-show{
+    width: 100%;
+    height: 100%;
+}
+
+/* 圖片本身 */
+.img-show>img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    border-radius: 5px;
+    transition: 0.5s;/* 轉場秒數 */
+    top: 0;
+    left: 0;
+}
+
+/* 有.show的顯示 */
+.img-show>img.show{
+    opacity: 1;
+}
+
+/* 包左右箭頭 */
+.img-button{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 36px;
+    margin: auto 0;
+    top: 0;
+    bottom: 0;
+}
+
+/* 箭頭本身 */
+.img-button>div{
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    border: 0;
+    text-align: center;
+    background: #f8f8f89c;
+    cursor: pointer;
+}
+
+/* 箭頭圖大小 */
+.img-button>div>i{
+    line-height: 36px;
+    font-size: 30px;
+    color: #0000009c;
+}
+
+/* 游標指到後反黑 */
+.img-button>div>i:hover{
+    color: #000000;
+}
+
+/* 包index */
+.img-count{
+    position: absolute;
+    bottom: 10px;
+    height: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* index本身 */
+.img-count div{
+    width: 12px;
+    height: 12px;
+    margin: 0 6px;
+    border: 1px solid #f8f8f89c;
+    border-radius: 50%;
+    background: #f8f8f89c;
+    transition: 0.5s;
+}
+
+/* 顯示有.show的index */
+.img-count div.show{
+    background: #000000cb;
+}
+
+/* 包預定資訊 */
+.booking-info{
+    width: 600px;
+}
+
+/* 景點名稱 */
+.booking-info>h3{
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+/* 景點類別跟捷運站 */
+.booking-info>p{
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* 包表單 */
+.booking-form{
+    width: 100%;
+    padding: 15px 20px;
+    background: #e8e8e8;
+    border-radius: 5px;
+}
+
+.booking-form>*{
+    margin-bottom: 15px;
+}
+
+/* 第一個表單字粗體 */
+.booking-form div label:first-child{
+    font-weight: bold;
+}
+
+/* 日期框框大小 */
+.booking-form .date input{
+    padding: 5px 10px;
+    height: 35px;
+    border: none;
+}
+
+/* 時間表單 */
+.booking-form .time>label{
+    margin-right: 10px;
+}
+
+/* 選項點點 */
+.booking-form .time input{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background:#ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    transform: translateY(5px);
+}
+
+/* 確定選擇後反色 */
+.booking-form .time input:checked{
+    background: #448899;
+}
+
+/* 預定行程按鈕 */
+.booking-form button{
+    margin-top: 15px;
+    margin-bottom: 25px;
+    padding: 10px 20px;
+    color: #ffffff;
+    background: #448899;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* 景點介紹、地址、交通方式 */
+.info{
+    margin: 40px 0;
+    padding: 10px;
+}
+.info>*{
+    margin-bottom: 20px;
+}
+.info p{
+    text-align: justify;
+    line-height: 180%;
+}
+.info .title{
+    font-weight: bold;
+}
+
+
+@media(max-width:1200px){
+    main{
+        width: 100%;
+    }
+    nav{
+        grid-template-columns: 1fr;
+    }
+    .info-contain{
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .booking-info{
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 0;
+    }
+    .img-location{
+        width: 100%;
+    }
+    .booking{
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+    }
+    .booking-form{
+        width: 100%;
+    }
+}
+@media(max-width:600px){
+    nav{
+        grid-template-columns: 1fr;
+    }
+    .img-location{
+        height: 360px;
+    }
+}
