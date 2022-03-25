@@ -96,7 +96,7 @@ nav{
     height: 275px;
     margin: 80px auto;
     background: #ffffff;
-    border-radius: 5px;;
+    border-radius: 6px;;
 }
 .sign-container.show{
     display: block;
@@ -106,13 +106,14 @@ nav{
     width: 100%;
     height: 10px;
     background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
-    border-radius: 5px 5px 0 0 ;
+    border-radius: 6px 6px 0 0 ;
 }
 
 .form-container{
     padding: 15px;
     text-align: center;
     background-color: white;
+    border-radius: 0 0px 6px 6px;
 }
 .form-title{
     position: relative;
@@ -136,6 +137,7 @@ nav{
     border-radius: 5px;
     margin-bottom: 10px;
     border-color: #cccccc;
+    border-style: solid;
 }
 
 .form-content>input::placeholder{
