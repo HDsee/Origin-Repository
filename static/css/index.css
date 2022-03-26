@@ -138,6 +138,7 @@ nav{
     margin-bottom: 10px;
     border-color: #cccccc;
     border-style: solid;
+    border-width: 1px;
 }
 
 .form-content>input::placeholder{
