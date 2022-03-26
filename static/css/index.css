@@ -153,13 +153,11 @@ nav{
     font-size: 19px;
     background: #448899;
     border: 0;
-    padding: 10px;
     cursor: pointer;
 }
 
 .message{
 color: red;
-    margin-bottom: 10px;
 }
 
 .change-sign{
