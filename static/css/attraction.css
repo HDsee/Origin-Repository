@@ -67,6 +67,104 @@ nav{
     color: #666666;
     cursor: pointer;
     justify-content:center;
+    display:none;
+}
+
+.signin.show{
+    display: block;
+}
+
+/*註冊跟登入視窗*/
+.sign-window{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.25);
+    display: none;
+}
+
+.sign-window.show{
+    display: block;
+}
+
+.sign-container{
+    display:none;
+    width: 340px;
+    height: 275px;
+    margin: 80px auto;
+    background: #ffffff;
+    border-radius: 6px;;
+}
+.sign-container.show{
+    display: block;
+}
+
+.top-bar{
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+    border-radius: 6px 6px 0 0 ;
+}
+
+.form-container{
+    padding: 15px;
+    text-align: center;
+    background-color: white;
+    border-radius: 0 0px 6px 6px;
+}
+.form-title{
+    position: relative;
+    color: #666666;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.close-btn{
+    position: absolute;
+    line-height: 16px;
+    width: 16px;
+    top: 7px;
+    right: 7px;
+    cursor: pointer;
+}
+
+.form-content>*{
+    width: 100%;
+    height: 47px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border-color: #cccccc;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.form-content>input::placeholder{
+    color: #666666;
+    font-size: 16px;
+}
+
+.form-content>button{
+    color: #ffffff;
+    width: 100%;
+    height: 47px;
+    font-size: 19px;
+    background: #448899;
+    border: 0;
+    cursor: pointer;
+}
+
+.message{
+color: red;
+}
+
+.change-sign{
+    font-weight: bold;
+    color: #666666;
+    cursor: pointer;
+    margin: 0 auto;
 }
 
 footer{
