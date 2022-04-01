@@ -23,9 +23,15 @@ userApi = Blueprint( 'userApi', __name__)
 def api_user():
     # 登入中
     if "user" in session:
+        id = session['id']
         user = session['user']
+        email = session['email']
         data = {
-            "data":user
+            "data":{
+                "id":id,
+                "user":user,
+                "email":email
+            }
         }
         return jsonify(data)
 
@@ -33,6 +39,7 @@ def api_user():
     data = {"data": None}
     return jsonify(data)
 
+# 註冊功能
 @userApi.route('/user', methods=['POST'])
 def signup():
     try:
@@ -72,6 +79,7 @@ def signup():
         db.close()
         return jsonify(data), 500
 
+# 登入功能
 @userApi.route('/user', methods=['PATCH'])
 def signin():
     try:
@@ -84,10 +92,9 @@ def signin():
         user = cursor.fetchone()
         # 登入成功
         if user:
-            print(user)
+            session['id'] = user[0]
             session['user'] = user[1]
-            session['userEmail'] = user[2]
-            print(session)
+            session['email'] = user[2]
             data = {"ok": True}
             cursor.close()
             db.close()
@@ -113,6 +120,7 @@ def signin():
         db.close()
         return jsonify(data), 500
 
+# 登出功能
 @userApi.route('/user', methods=['DELETE'])
 def singout():
     # 登出

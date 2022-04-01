@@ -272,7 +272,6 @@ main .img-location{
     cursor: pointer;/*游標變成手指*/
     padding-top: 60%;
     width: 100%;
-    position: relative;
 }
 .img-base:hover{
     opacity: 0.5;

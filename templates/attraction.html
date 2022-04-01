@@ -12,7 +12,7 @@
         <div></div>
         <div class="top">
             <a class="webname" href="/">台北一日遊</a>
-            <a class="book" href="/booking">預定行程</a>
+            <div id="book" class="signin show" >預定行程</div>
             <div id="sign-btn" class="signin show" >登入/註冊</div>
             <div id="signout-btn"class="signin" >登出</div>
         </div>    
@@ -72,16 +72,16 @@
                     <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
                     <div class="date">
                         <label for="date">選擇日期：</label>
-                        <input type="date" id="date" name="date" >
+                        <input type="date" id="date" name="date" required>
                     </div>
                     <div class="time">
                         <label>選擇時間：</label>
 
-                        <input type="radio" name="time" id="am" value="am">
-                        <label for="am">上半天</label>
+                        <input type="radio" name="time" id="morning" value="morning" required>
+                        <label for="morning">上半天</label>
 
-                        <input type="radio" name="time" id="pm" value="pm"> 
-                        <label for="pm">下半天</label>
+                        <input type="radio" name="time" id="afternoon" value="afternoon" required> 
+                        <label for="afternoon">下半天</label>
                     </div>
                     <div class="pay">
                         <label>導覽費用：</label>
@@ -106,7 +106,7 @@
 
     </main>
     <footer>
-        <p>COPYRIGHT © 2021 台北一日遊</p>
+        <div>COPYRIGHT © 2021 台北一日遊</div>
     </footer>
 
     <script src="/static/js/attraction.js"></script>
