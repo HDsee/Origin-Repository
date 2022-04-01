@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>景點資訊</title>
+<script src="https://kit.fontawesome.com/647c2fadc1.js" crossorigin="anonymous"></script>
+<link href="/static/css/booking.css" rel="stylesheet" type="text/css"  />
+</head>
+<body>
+    <nav>
+        <div></div>
+        <div class="top">
+            <a class="webname" href="/">台北一日遊</a>
+            <div id="book" class="signin show" >預定行程</div>
+            <div id="sign-btn" class="signin show" >登入/註冊</div>
+            <div id="signout-btn"class="signin" >登出</div>
+        </div>    
+        <div></div>
+    </nav>
+    <Section class="sign-window">
+        <div class="sign-container show">   
+            <div class="top-bar"></div>
+            <div class="form-container" >
+                <form id="signin">
+                    <h3 class="form-title">登入會員帳號
+                        <div class="close-btn">✕</div>
+                    </h3>
+                    <div class="form-content">
+                        <input type="email" placeholder="輸入電子信箱" name="email" required>
+                        <input type="password" placeholder="輸入密碼" name="password" required>
+                        <button type="submit">登入帳戶</button>
+                    </div>
+                    <p class="message"></p>
+                    <p class="change-sign">還沒有帳戶？點此註冊</p>
+                </form>
+            </div>     
+        </div>
+        <div class="sign-container">
+            <div class="top-bar"></div>
+            <div class="form-container">
+                <form id="signup">
+                    <h3 class="form-title">註冊會員帳號
+                        <div class="close-btn">✕</div>
+                    </h3>
+                    <div class="form-content">
+                        <input type="text" placeholder="輸入姓名" name="name" required>
+                        <input type="email" placeholder="輸入電子信箱" name="email" required>
+                        <input type="password" placeholder="輸入密碼" name="password" required>
+                        <button type="submit">註冊帳戶</button>
+                    </div>
+                    <p class="message"></p>
+                    <p class="change-sign">已經有帳戶了？點此登入</p>
+                </form>
+            </div>     
+        </div>
+    </Section>    
+    <div class="up-seperator"></div>
+    <main>
+        <h3 class="headline"></h3>
+        <div class="booking-container">
+            <div class="img-base"></div>
+            <div class="booking-content">
+                <div class="booking-attraction"></div>
+                <div class="booking-item"><span>日期：</span>
+                    <div class="booking-date"></div>
+                </div>
+                <div class="booking-item"><span>時間：</span>
+                    <div class="booking-time"></div>
+                </div>
+                <div class="booking-item"><span>費用：</span>
+                    <div class="booking-price"></div>
+                </div>
+                <div class="booking-item"><span>地址：</span>
+                    <div class="booking-address"></div>
+                </div>
+            </div>
+            <div class="delete" id="delete-button" type="submit"><i class="fa-solid fa-trash-can"></i></div>
+        </div>
+        <form class="order">
+            <div class="seperator"></div>
+            <div class="contact-info">
+                <h3>您的聯絡資訊</h3>
+                <div>
+                    <label for="name">聯絡姓名：</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div>
+                    <label for="email">連絡信箱：</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div>
+                    <label for="phone">手機號碼：</label>
+                    <input type="text" id="phone" name="phone" pattern="09[0-9]{8}" required>
+                </div>
+                <p>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
+            </div>
+            <div class="seperator"></div>
+            <div class="pay-info">
+                <h3>信用卡付款資訊</h3>
+                <div class="card-number-container">
+                    <label for="card-number">卡片號碼：</label>
+                    <div class="card-info" id="card-number"></div>
+                </div>
+                <div class="card-date-container">
+                    <label for="card-date">過期時間：</label>
+                    <div class="card-info" id="card-date"></div>
+                </div>
+                <div class="card-ccv-container">
+                    <label for="card-ccv">驗證號碼：</label>
+                    <div class="card-info" id="card-ccv"></div>
+                </div>
+            </div>
+            <div class="seperator"></div>
+            <div class="price-info">
+                <p class="error-message"></p>
+                <p>總價：新台幣 <span class="total-price"></span> 元</p>
+                <button type="submit" disabled>確認訂購並付款</button>
+            </div>
+        </form> 
+    </main>
+    <footer>
+        <div class="footer">COPYRIGHT © 2021 台北一日遊</div>
+    </footer>
+
+    <script src="/static/js/booking.js"></script>
+    <script src="/static/js/sign.js"></script>
+</body>
+</html>

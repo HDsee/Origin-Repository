@@ -35,7 +35,7 @@ changeSignBtn.forEach(change => {
 //註冊登入
 const signinForm = document.querySelector('#signin')
 const signupForm = document.querySelector('#signup')
-const api = '/api/user'
+const userApi = '/api/user'
 
 //註冊功能
 function signup(e){
@@ -45,7 +45,7 @@ function signup(e){
         email : this.querySelector('input[name="email"]').value,
         password : this.querySelector('input[name="password"]').value 
     }
-    fetch(api, {
+    fetch(userApi, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: new Headers({
@@ -71,7 +71,7 @@ function signin(e){
         email : this.querySelector('input[name="email"]').value,
         password : this.querySelector('input[name="password"]').value 
     }
-    fetch(api, {
+    fetch(userApi, {
         method: 'PATCH',
         body: JSON.stringify(data),
         headers: new Headers({
@@ -102,7 +102,7 @@ signinForm.addEventListener('submit', signin)
 
 //登出
 function signout(){
-    fetch(api, {
+    fetch(userApi, {
         method: 'DELETE'
     })
     .then(() => {
@@ -114,7 +114,7 @@ signoutBtn.addEventListener('click', signout)
 
 //檢查有沒有登入
 function userCheck(){
-    fetch(api)
+    fetch(userApi)
         .then(res => res.json())
         .then(data => {
             if(data.data){
@@ -127,3 +127,22 @@ function userCheck(){
         })
 }
 userCheck()
+
+const bookingPageBtn = document.querySelector('#book')
+
+function bookingPage(e){
+    e.preventDefault()
+
+    fetch(userApi)
+        .then(res => res.json())
+        .then(data => {
+            // 有登入
+            if(data.data !== null){
+                window.location.href='/booking';
+            }else{  // 沒登入
+                showSignWindow()
+            }
+        })
+}
+
+bookingPageBtn.addEventListener('click', bookingPage)

@@ -96,7 +96,7 @@ nav{
     height: 275px;
     margin: 80px auto;
     background: #ffffff;
-    border-radius: 6px;
+    border-radius: 6px;;
 }
 .sign-container.show{
     display: block;
@@ -167,79 +167,8 @@ color: red;
     margin: 0 auto;
 }
 
-/*slogan跟圖片區*/
-.main-contain{
-    min-height: calc(100% - 54px - 104px);
-}
-
-.slogan{
-    position: relative;
-    z-index: 0;
-    width: 100%;
-    background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
-    padding:75px 0px;
-    overflow: hidden;
-
-}
-
-.slogan>div{
-    position: relative;/*原本位置的相對位置*/
-    z-index: 1;
-    width: 1200px;
-    margin: 0px auto;
-    padding: 10px;
-    height: 170px;
-}
-
-.slogan>div>div{
-    margin-bottom: 25px;
-}
-
-.slogan h3{
-    font-size: 28px;
-    height: 41px;
-    color: #F8F8F8;
-    margin-bottom: 15px;
-}
-
-.slogan p{
-    font-size: 16px;
-    height: 22px;
-    color: #F8F8F8;
-}
-
-.slogan form{
-    display: flex;
-}
-
-.slogan input{
-    background: #FFFFFF;
-    padding: 15px;
-    width: 400px;
-    border: 0;
-    border-radius: 5px 0 0 5px;
-}
-
-.slogan button{
-    background: #448899;
-    padding: 8px 15px;
-    border: 0;
-    border-radius: 0 5px 5px 0;
-}
-
-.slogan button>i{
-    font-size: 30px;
-    color: #ffffff;
-    cursor: pointer;
-}
-
-.slogan-img{
-    position: absolute;/* 整個框的絕對位置 */
-    z-index: 0;
-    width: 650px;
-    left: calc(57% - 57px);
-    bottom: 0;
-    overflow: hidden;
+h3, p, label, span{
+    color: #666666;
 }
 
 footer{
@@ -247,93 +176,200 @@ footer{
     font-weight: bold;
     font-size: 16px;
     line-height: 104px;
+    width: 100%;
     color: #ffffff;
     background-color: #757575;
     text-align: center;
 }
 
+.up-seperator{
+    width: 100%;
+    height: 1px;
+    margin: 0;
+    background-color: #e8e8e8;
+}
+
+.seperator{
+    width: 100%;
+    height: 1px;
+    margin: 40px 0;
+    background-color: #e8e8e8;
+}
+
+
 main{
+    min-height: calc(100% - 54px - 102px - 40px);
     width: 1200px;
-    margin: 40px auto;
-    padding: 15px;
-    display: grid;
-    grid-gap: 30px; /*格子跟格子的間距*/
-    grid-template-columns: repeat(4, minmax(0, 1fr));/* 一行切四欄，高度最小0最高1fr */
+    margin: 0 auto;
 }
-main .img-location{
-    border: 1px solid #E8E8E8;
-    border-radius: 5px;
-    padding-bottom: 12px;
+
+
+
+.headline{
+    width: 980px;
+    margin: 40px auto 30px auto;
 }
+
+.booking-container{
+    display: flex;
+    width: 980px;
+    height: 200px;
+    margin:0 auto 40px auto;
+    align-items: center;
+}
+
 
 .img-base{
-    position: relative;
-    display: block;
-    cursor: pointer;/*游標變成手指*/
-    padding-top: 60%;
-    width: 100%;
-}
-.img-base:hover{
-    opacity: 0.5;
-}
-.img-base>img{
-    position:absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    width: 266px;
     height: 100%;
-    object-fit: cover;/* 填滿元素的寬度及高度(維持原比例) */
-    display: block;
-    border-radius: 5px 5px 0 0;
+    top: 0;
 }
 
-.img-location>.img-name{
-    display: block;
-    /* min-width: 100%; */
-    max-width: fit-content;
-    text-decoration: none;
-    margin: 9px 10px 15px 10px;
-    font-weight: 700;
-    color: #757575;
-    overflow: hidden;/*超出的內容隱藏*/
-    text-overflow : ellipsis;/*只顯示一行文字*/
-    white-space: nowrap;/*強制不換行*/
+.img-base>img{
+    width: 266px;
+    height: 100%;
+    margin: 0 8px;
+    object-fit: cover;
+    top: 0;
+    left: 0;
 }
-.img-info{
-    margin: 0 10px;
+
+.booking-content{
+    margin-left: 22px;
+    font-size: 16px;
+    line-height: 13px;
+    width: 100%;
+}
+
+.booking-attraction{
+    font-weight: bold;
+    color: #448899;
+    margin-bottom: 30px;
+}
+
+.booking-item{
     display: flex;
-    justify-content: space-between;/* 平均排列每個元素，第一個放最前面，最後一個放最後面*/
+    margin-bottom: 20px;
+    color: #666666;
 }
-.img-info>p{
-    color: #757575;
+
+.booking-item>span{
+    font-weight: bold;
+}
+
+.delete{
+    margin:0 0 auto auto;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.order{
+    width: 1200px;
+    line-height: 16px;
+}
+.contact-info ,.pay-info,.price-info{
+    align-items: center;
+    width: 980px;
+    margin: 0 auto;
+}
+
+.contact-info>h3 ,.pay-info>h3{
+    margin:44px 0 24px;
+    font-size: 19px;
+}
+
+.contact-info>div ,.pay-info>div{
+    margin-bottom:15px;
+    font-size: 16px;
+    align-items: center;
+}
+
+.contact-info>p{
+    font-weight: bold;
+}
+
+.price-info{
+    margin-bottom: 60px;
+
+}.pay-info>div{
+    display: flex;
+}
+
+.order :is(input, .card-info){
+    width: 200px;
+    padding: 10px;
+    border:1px solid #E8E8E8;
+    border-radius: 5px;
+    height: 35px;
+}
+
+
+
+.price-info>p{
+    margin-bottom: 20px;
+    width: fit-content;
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.price-info>button{
+    display: block;
+    background: #448899;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: auto;
 }
 
 @media (max-width:1200px){
     nav{
         grid-template-columns: 1fr;
     }
-    .slogan>div{
-        width: calc(100% - 20px);
-    }
-    .slogan input{
-        width: calc(20% + 150px);
-    }
-    .slogan-img{
-        width: calc(45% + 150px);
-    }
-
     main{
-        width: 90%;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
     }
-
+    .headline{
+        width:100%;
+    }
+    .booking-container{
+        width: 100%;
+    }
+    .order{
+        width: 100%;
+    }
+    .contact-info ,.pay-info,.price-info{
+        width: 100%;
+    }
 }
 
 @media (max-width:600px){
+    .booking-container{
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    main{
+        width: 100%;
+    }
+    .order{
+        width: 100%;
+    }
+    .contact-info ,.pay-info,.price-info{
+        width: 100%;
+    }
     nav{
         grid-template-columns: 1fr;
     }
-    main{
-        grid-template-columns: 1fr;
+    .img-base{
+        width: 100%;
+    }
+    
+    .img-base>img{
+        width: 100%;
+        object-fit: cover;
+        margin: 0 auto;
     }
 }

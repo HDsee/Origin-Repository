@@ -4,8 +4,8 @@ const imgCount= infoContain.querySelector('.img-count')
 const book = infoContain.querySelector('.booking-info')
 const id = infoContain.querySelector('input[name="id"]')
 const price = infoContain.querySelector('#price')
-const am = infoContain.querySelector('input[value="am"]')
-const pm = infoContain.querySelector('input[value="pm"]')
+const morning = infoContain.querySelector('input[value="morning"]')
+const afternoon = infoContain.querySelector('input[value="afternoon"]')
 
 const info = document.querySelector('.info')
 const addressText = info.querySelector('.address')
@@ -58,13 +58,13 @@ const getdata = async () => {
 }
 
 //早上金額
-am.addEventListener('click', ()=>{
+morning.addEventListener('click', ()=>{
     price.innerText = 2000
 
 })
 
 //下午金額
-pm.addEventListener('click', ()=>{
+afternoon.addEventListener('click', ()=>{
     price.innerText = 2500
 })
  
@@ -126,3 +126,45 @@ getdata()
             autoChangeImg = window.setInterval(moveNextImg, moveTime)
         })
     })
+
+
+const bookingForm = book.querySelector('.booking-form')
+const bookingDate = bookingForm.querySelector('input[name="date"]')
+
+function bookingStart(e){
+    e.preventDefault()
+
+    fetch(userApi)
+        .then(res => res.json())
+        .then(data => {
+            // 有登入
+            if(data.data !== null){
+                const data = {
+                    attractionId : parseInt(attractionId), 
+                    date : this.querySelector('input[name="date"]').value,
+                    time : this.querySelector('input[name="time"]:checked').value,
+                    price : parseInt(this.querySelector('#price').innerText)
+                }
+                const bookingAPI = '/api/booking'
+                fetch(bookingAPI, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.ok === true){
+                        window.location.href='/booking';
+                    }else{
+                        alert(data.message)
+                    }
+                })
+            }else{  // 沒登入
+                showSignWindow()
+            }
+        })
+}
+
+bookingForm.addEventListener('submit', bookingStart)
