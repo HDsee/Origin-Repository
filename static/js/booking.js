@@ -3,6 +3,10 @@ const orderApi = '/api/order'
 const headLine = document.querySelector('.headline')
 const orderForm = document.querySelector('.order')
 const main = document.querySelector('main')
+const bookingAlldata = document.querySelector('.booking-alldata')
+const noBooking = document.querySelector('.nobooking')
+const footer = document.querySelector('footer')
+
 
 function getUser(){
     fetch('/api/user')
@@ -12,7 +16,7 @@ function getUser(){
             headLine.innerText = `您好，${data.data.user}，待預定的行程如下：`
             getBookingInfo()
         }else{
-            window.location.href='/';
+            window.location.href='/'
         }
     })
 }
@@ -27,7 +31,6 @@ const bookingDate = bookingContainer.querySelector('.booking-date')
 const bookingTime = bookingContainer.querySelector('.booking-time')
 const bookingPrice = bookingContainer.querySelector('.booking-price')
 const bookingAddress = bookingContainer.querySelector('.booking-address')
-const deleteBtn = bookingContainer.querySelector('.delete-Button')
 const totalPrice = orderForm.querySelector('.total-price')
 
 
@@ -48,14 +51,31 @@ function getBookingInfo(){
             bookingAddress.innerText = `${bookingData.attraction.address}`
             totalPrice.innerText = `${bookingData.price}`
         }else{
-            window.location.href='/';
+            showNoBooking()
         }
     })
 }
 
+const deleteBtn =document.querySelector('#delete-button')
+
+function deleteBooking(){
+    fetch(bookingApi, {
+        method: 'DELETE'
+    })
+    .then(() => {
+        showNoBooking()
+    })
+
+}
+
+deleteBtn.addEventListener('click', deleteBooking)
 
 
-
-
-
+function showNoBooking(){
+    bookingAlldata.classList.remove('booking-show')
+    noBooking.classList.add('booking-show')
+    main.style.minHeight = "150px"
+    footer.style.height = "100%"
+    footer.style.paddingBottom = "calc(100% -150px );"
+}
 

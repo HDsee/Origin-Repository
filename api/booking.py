@@ -132,7 +132,7 @@ def delete_booking():
         cursor = db.cursor()
         if "user" in session:
             UserId = session["id"]
-            cursor.execute('delete * from `booking` where user_id=%s',(UserId,))
+            cursor.execute('delete from `booking` where user_id=%s',(UserId,))
             db.commit()
             data = {"ok": True}
             cursor.close()

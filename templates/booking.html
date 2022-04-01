@@ -58,66 +58,70 @@
     <div class="up-seperator"></div>
     <main>
         <h3 class="headline"></h3>
-        <div class="booking-container">
-            <div class="img-base"></div>
-            <div class="booking-content">
-                <div class="booking-attraction"></div>
-                <div class="booking-item"><span>日期：</span>
-                    <div class="booking-date"></div>
+        <h4 class="nobooking">目前沒有任何待預定的行程</h4>
+        <div class="booking-alldata booking-show">
+            <div class="booking-container">
+                <div class="img-base"></div>
+                <div class="booking-content">
+                    <div class="booking-attraction"></div>
+                    <div class="booking-item"><span>日期：</span>
+                        <div class="booking-date"></div>
+                    </div>
+                    <div class="booking-item"><span>時間：</span>
+                        <div class="booking-time"></div>
+                    </div>
+                    <div class="booking-item"><span>費用：</span>
+                        <div class="booking-price"></div>
+                    </div>
+                    <div class="booking-item"><span>地址：</span>
+                        <div class="booking-address"></div>
+                    </div>
                 </div>
-                <div class="booking-item"><span>時間：</span>
-                    <div class="booking-time"></div>
-                </div>
-                <div class="booking-item"><span>費用：</span>
-                    <div class="booking-price"></div>
-                </div>
-                <div class="booking-item"><span>地址：</span>
-                    <div class="booking-address"></div>
-                </div>
+                <div class="delete" id="delete-button"><i class="fa-solid fa-trash-can"></i></div>
             </div>
-            <div class="delete" id="delete-button" type="submit"><i class="fa-solid fa-trash-can"></i></div>
-        </div>
-        <form class="order">
-            <div class="seperator"></div>
-            <div class="contact-info">
-                <h3>您的聯絡資訊</h3>
-                <div>
-                    <label for="name">聯絡姓名：</label>
-                    <input type="text" id="name" name="name" required>
+            <form class="order">
+                <div class="seperator"></div>
+                <div class="contact-info">
+                    <h3>您的聯絡資訊</h3>
+                    <div>
+                        <label for="name">聯絡姓名：</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div>
+                        <label for="email">連絡信箱：</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div>
+                        <label for="phone">手機號碼：</label>
+                        <input type="text" id="phone" name="phone" pattern="09[0-9]{8}" required>
+                    </div>
+                    <p>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
                 </div>
-                <div>
-                    <label for="email">連絡信箱：</label>
-                    <input type="email" id="email" name="email" required>
+                <div class="seperator"></div>
+                <div class="pay-info">
+                    <h3>信用卡付款資訊</h3>
+                    <div class="card-number-container">
+                        <label for="card-number">卡片號碼：</label>
+                        <input type="text" id="card-number" placeholder="**** **** **** ****" >
+                    </div>
+                    <div class="card-date-container">
+                        <label for="card-date">過期時間：</label>
+                        <input type="text" id="card-date" placeholder="MM/YY">
+                    </div>
+                    <div class="card-ccv-container">
+                        <label for="card-ccv">驗證號碼：</label>
+                        <input type="text" id="card-ccv" placeholder="CCV">
+                        <!-- <div class="card-info" id="card-ccv"></div> -->
+                    </div>
                 </div>
-                <div>
-                    <label for="phone">手機號碼：</label>
-                    <input type="text" id="phone" name="phone" pattern="09[0-9]{8}" required>
+                <div class="seperator"></div>
+                <div class="price-info">
+                    <p class="error-message"></p>
+                    <p>總價：新台幣 <span class="total-price"></span> 元</p>
+                    <button type="submit" disabled>確認訂購並付款</button>
                 </div>
-                <p>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
-            </div>
-            <div class="seperator"></div>
-            <div class="pay-info">
-                <h3>信用卡付款資訊</h3>
-                <div class="card-number-container">
-                    <label for="card-number">卡片號碼：</label>
-                    <div class="card-info" id="card-number"></div>
-                </div>
-                <div class="card-date-container">
-                    <label for="card-date">過期時間：</label>
-                    <div class="card-info" id="card-date"></div>
-                </div>
-                <div class="card-ccv-container">
-                    <label for="card-ccv">驗證號碼：</label>
-                    <div class="card-info" id="card-ccv"></div>
-                </div>
-            </div>
-            <div class="seperator"></div>
-            <div class="price-info">
-                <p class="error-message"></p>
-                <p>總價：新台幣 <span class="total-price"></span> 元</p>
-                <button type="submit" disabled>確認訂購並付款</button>
-            </div>
-        </form> 
+            </form>
+        </div> 
     </main>
     <footer>
         <div class="footer">COPYRIGHT © 2021 台北一日遊</div>

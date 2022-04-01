@@ -156,7 +156,7 @@ function bookingStart(e){
                 .then(res => res.json())
                 .then(data => {
                     if(data.ok === true){
-                        window.location.href='/booking';
+                        window.location.href='/booking'
                     }else{
                         alert(data.message)
                     }
