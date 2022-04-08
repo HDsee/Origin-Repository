@@ -65,7 +65,7 @@ def post_order():
             statusNum = res["status"]
             # 當回傳結果為付款成功時，回傳建立成功資訊
             if res["status"] == 0:
-                cursor.execute('INSERT INTO `Order` (number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contact_name,contact_email,contact_phone,status,user_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
+                cursor.execute('INSERT INTO `order` (number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contact_name,contact_email,contact_phone,status,user_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
                 (order_number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contactName,contactEmail,contactPhone,statusNum,user_id))
                 db.commit()
                 data = {
