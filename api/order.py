@@ -105,7 +105,7 @@ def post_order():
         return jsonify(data), 403
 
     # 伺服器（資料庫）連線失敗
-    except e:
+    except Exception as e:
         print(e)
         data = {
             "error": True,
