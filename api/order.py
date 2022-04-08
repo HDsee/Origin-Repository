@@ -17,57 +17,7 @@ connection_pool = pooling.MySQLConnectionPool(pool_name="db",
 
 orderApi = Blueprint( 'orderApi', __name__)
 
-#取得訂單
-# @orderApi.route('/booking', methods=["GET"])
-# def get_booking():
-#     try:
-#         db=connection_pool.get_connection()
-#         cursor = db.cursor(dictionary=True)
-#         if "user" in session:
-#             userId = session["id"]
-#             cursor.execute('select * from `booking` where user_id=%s',(userId,))
-#             bookingData = cursor.fetchone()
-#             if bookingData:
-#                 attractionId = bookingData["attraction_id"]
-#                 cursor.execute('select * from `attraction` where id=%s',(attractionId,))
-#                 attractionData = cursor.fetchone()
-#                 if attractionData:
-#                     attractionData["images"] = eval(attractionData["images"])
-#                     data = {
-#                         "data":{
-#                         "attraction": {
-#                             "id": attractionId,
-#                             "name": attractionData["name"],
-#                             "address": attractionData["address"],
-#                             "image": attractionData["images"][0]
-#                         },
-#                         "date": bookingData["date"].strftime("%Y-%m-%d"),
-#                         "time": bookingData["time"],
-#                         "price": bookingData["price"]
-#                     }}
-#                     cursor.close()
-#                     db.close()
-#                     return jsonify(data)
-#                 else:
-#                     {"data": None}
-#                     cursor.close()
-#                     db.close()
-#                     return jsonify(data)
-#         data = {
-#             "error": True,
-#             "message": "未登入系統，拒絕存取"
-#         }
-#         cursor.close()
-#         db.close()
-#         return jsonify(data),403
-#     except:
-#         data = {
-#             "error": True,
-#             "message": "伺服器內部錯誤"
-#         }
-#         cursor.close()
-#         db.close()
-#         return jsonify(data), 500
+
 
 # # 建立訂單
 @orderApi.route('/order', methods=["POST"])
@@ -155,7 +105,8 @@ def post_order():
         return jsonify(data), 403
 
     # 伺服器（資料庫）連線失敗
-    except:
+    except e:
+        print(e)
         data = {
             "error": True,
             "message": "伺服器內部錯誤"
