@@ -176,11 +176,13 @@ footer{
     font-weight: bold;
     font-size: 16px;
     line-height: 104px;
+    height: 100%;
     width: 100%;
     color: #ffffff;
     background-color: #757575;
     text-align: center;
     margin-bottom: 0;
+    padding-bottom:calc(100% -150px );
 }
 
 .up-seperator{
@@ -190,220 +192,23 @@ footer{
     background-color: #e8e8e8;
 }
 
-.seperator{
-    width: 100%;
-    height: 1px;
-    margin: 40px 0;
-    background-color: #e8e8e8;
-}
-
 
 main{
-    min-height: calc(100% - 54px - 104px);
+    min-height: 150px;
     width: 1200px;
     margin: 0 auto;
 }
 
 
-.nobooking{
-    display: none;
-    color: #666666;
+.order-number{
+    color: blue;
     font-weight: bold;
     font-size: 16px;
     margin: 0 auto 40px auto;
     width: 980px;
 }
 
-.booking-alldata{
-    display: none;
-}
-
-.booking-show{
-    display: block;
-}
-
 .headline{
     width: 980px;
     margin: 40px auto 30px auto;
-}
-
-.booking-container{
-    display: flex;
-    width: 980px;
-    height: 200px;
-    margin:0 auto 40px auto;
-    align-items: center;
-}
-
-
-.img-base{
-    width: 266px;
-    height: 100%;
-    top: 0;
-    margin-bottom: 30px;
-}
-
-.img-base>img{
-    width: 266px;
-    height: 100%;
-    margin: 0 8px;
-    object-fit: cover;
-    top: 0;
-    left: 0;
-}
-
-.booking-content{
-    margin-left: 22px;
-    font-size: 16px;
-    line-height: 13px;
-    width: 100%;
-}
-
-.booking-attraction{
-    font-weight: bold;
-    color: #448899;
-    margin-bottom: 30px;
-}
-
-.booking-item{
-    display: flex;
-    margin-bottom: 20px;
-    color: #666666;
-}
-
-.booking-item>span{
-    font-weight: bold;
-}
-
-.delete{
-    margin:0 0 auto auto;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.order{
-    width: 1200px;
-    line-height: 16px;
-}
-.contact-info ,.pay-info,.price-info{
-    align-items: center;
-    width: 980px;
-    margin: 0 auto;
-}
-
-.contact-info>h3 ,.pay-info>h3{
-    margin:44px 0 24px;
-    font-size: 19px;
-}
-
-.contact-info>div ,.pay-info>div{
-    margin-bottom:15px;
-    font-size: 16px;
-    align-items: center;
-}
-
-.contact-info>p{
-    font-weight: bold;
-}
-
-.price-info{
-    margin-bottom: 60px;
-
-}.pay-info>div{
-    display: flex;
-    align-items: center;
-}
-
-.order :is(input, .tpfield-num,.tpfield-exp,.tpfield-ccv){
-    width: 200px;
-    padding: 10px;
-    border:1px solid #E8E8E8;
-    border-radius: 5px;
-    height: 35px;
-}
-
-
-
-.price-info>p{
-    margin-bottom: 20px;
-    width: fit-content;
-    margin-left: auto;
-    font-weight: bold;
-}
-
-.price-info>button{
-    display: block;
-    background: #448899;
-    border-radius: 5px;
-    padding: 10px 20px;
-    color: #ffffff;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: auto;
-}
-
-.invalid{
-    border-color:red;
-}
-.valid{
-    border-color:green;
-}
-
-
-
-@media (max-width:1200px){
-    nav{
-        grid-template-columns: 1fr;
-    }
-    main{
-        width: 100%;
-    }
-
-    .headline{
-        width: 100%;
-    }
-
-    .nobooking{
-        width:100%;
-    }
-    .booking-container{
-        width: 100%;
-    }
-    .order{
-        width: 100%;
-    }
-    .contact-info ,.pay-info,.price-info{
-        width: 100%;
-    }
-}
-
-@media (max-width:600px){
-    .booking-container{
-        flex-wrap: wrap;
-        width: 100%;
-        height: 100%;
-    }
-    main{
-        width: 100%;
-    }
-    .order{
-        width: 100%;
-    }
-    .contact-info ,.pay-info,.price-info{
-        width: 100%;
-    }
-    nav{
-        grid-template-columns: 1fr;
-    }
-    .img-base{
-        width: 100%;
-    }
-    
-    .img-base>img{
-        width: 100%;
-        object-fit: cover;
-        margin: 0 auto;
-    }
 }

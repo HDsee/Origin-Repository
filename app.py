@@ -4,6 +4,7 @@ from flask import *
 from api.attraction import attractionApi 
 from api.user import userApi 
 from api.booking import bookingApi 
+from api.order import orderApi 
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -14,6 +15,7 @@ app.config["JSON_SORT_KEYS"] = False #阻止json按照字母排序
 app.register_blueprint(attractionApi, url_prefix='/api')
 app.register_blueprint(userApi, url_prefix='/api')
 app.register_blueprint(bookingApi, url_prefix='/api')
+app.register_blueprint(orderApi, url_prefix='/api')
 
 app.secret_key="HD"
 # Pages
