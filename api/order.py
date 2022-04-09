@@ -67,6 +67,7 @@ def post_order():
             if res["status"] == 0:
                 cursor.execute('INSERT INTO `order` (number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contact_name,contact_email,contact_phone,status,user_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
                 (order_number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contactName,contactEmail,contactPhone,statusNum,user_id))
+                cursor.execute('delete from `booking` where user_id=%s',(user_id,))
                 db.commit()
                 data = {
                     "data":{
