@@ -100,25 +100,24 @@
                 <div class="seperator"></div>
                 <div class="pay-info">
                     <h3>信用卡付款資訊</h3>
-                    <div class="card-number-container">
+                    <div class="card-info">
                         <label for="card-number">卡片號碼：</label>
-                        <input type="text" id="card-number" placeholder="**** **** **** ****" >
+                        <div class="tpfield-num" id="card-number"></div>
                     </div>
-                    <div class="card-date-container">
-                        <label for="card-date">過期時間：</label>
-                        <input type="text" id="card-date" placeholder="MM/YY">
+                    <div class="card-info">
+                        <label for="card-expiration-date">過期時間：</label>
+                        <div class="tpfield-exp" id="card-expiration-date"></div>
                     </div>
-                    <div class="card-ccv-container">
+                    <div class="card-info">
                         <label for="card-ccv">驗證號碼：</label>
-                        <input type="text" id="card-ccv" placeholder="CCV">
-                        <!-- <div class="card-info" id="card-ccv"></div> -->
+                        <div class="tpfield-ccv" id="card-ccv"></div>
                     </div>
                 </div>
                 <div class="seperator"></div>
                 <div class="price-info">
                     <p class="error-message"></p>
                     <p>總價：新台幣 <span class="total-price"></span> 元</p>
-                    <button type="submit" disabled>確認訂購並付款</button>
+                    <button class="pay-button" type="submit">確認訂購並付款</button>
                 </div>
             </form>
         </div> 
@@ -127,6 +126,7 @@
         <div class="footer">COPYRIGHT © 2021 台北一日遊</div>
     </footer>
 
+    <script src="https://js.tappaysdk.com/tpdirect/v5.9.0"></script>
     <script src="/static/js/booking.js"></script>
     <script src="/static/js/sign.js"></script>
 </body>

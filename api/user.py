@@ -1,6 +1,5 @@
 from flask import *
 from flask import session
-
 import mysql.connector
 
 from mysql.connector import pooling
