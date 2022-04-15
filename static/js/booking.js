@@ -79,10 +79,13 @@ function showNoBooking(){
     footer.style.paddingBottom = "calc(100% -150px );"
 }
 
+const tappayID = 123987
+const tappayKey = 'app_hWOkT0nb7PgG9I85DVq3eBApzsyxYkf8qRNHjETb5CMa5aE0XieE5s4Xh7QS'
+
 
 //tappay串接//
 
-TPDirect.setupSDK(123987, 'app_hWOkT0nb7PgG9I85DVq3eBApzsyxYkf8qRNHjETb5CMa5aE0XieE5s4Xh7QS', 'sandbox');
+TPDirect.setupSDK(tappayID, tappayKey, 'sandbox');
 let fields = {
     number: {
         element: '#card-number',
@@ -128,7 +131,7 @@ TPDirect.card.onUpdate(function (update) {
 
     // 輸入錯誤=2，正確=0
     if (update.status.number === 2) {
-        cardNum.classList.remove('invalid')
+        cardNum.classList.add('invalid')
     } else if (update.status.number === 0) {
         cardNum.classList.add('valid')
     }

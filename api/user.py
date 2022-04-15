@@ -1,17 +1,23 @@
 from flask import *
 from flask import session
 import mysql.connector
-
 from mysql.connector import pooling
 
+# 讀取.env的隱藏資料
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+dbUser = os.getenv("dbUser")
+dbPassword = os.getenv("dbPassword")
 
 connection_pool = pooling.MySQLConnectionPool(pool_name="db",
                                             pool_size=10,
                                             pool_reset_session=True,
                                             host='localhost',
                                             database='taipeidata',
-                                            user='abc',
-                                            password='abc')
+                                            user=dbUser,
+                                            password=dbPassword)
 
 
 userApi = Blueprint( 'userApi', __name__)
@@ -50,22 +56,19 @@ def signup():
         cursor = db.cursor()
         cursor.execute('select * from `member` where email=%s',(email,))
         user = cursor.fetchone()
+        
         # 註冊成功
         if not user:
             cursor.execute('INSERT INTO `member` (name,email,password) VALUES (%s,%s,%s)',(name,email,password))
-            db.commit()
             data = {"ok": True}
-            cursor.close()
-            db.close()
             return jsonify(data), 200
+
         # email重複
         else:
             data = {
                 "error": True,
                 "message": "註冊失敗，重複的email"
             }
-            cursor.close()
-            db.close()
             return jsonify(data), 400
 
     # 伺服器錯誤
@@ -74,9 +77,12 @@ def signup():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        return jsonify(data), 500
+    finally:
+        db.commit()
         cursor.close()
         db.close()
-        return jsonify(data), 500
+    
 
 # 登入功能
 @userApi.route('/user', methods=['PATCH'])
@@ -95,8 +101,6 @@ def signin():
             session['user'] = user[1]
             session['email'] = user[2]
             data = {"ok": True}
-            cursor.close()
-            db.close()
             return jsonify(data)
 
         # 登入失敗
@@ -105,8 +109,6 @@ def signin():
                 "error": True,
                 "message": "信箱或密碼輸入錯誤"
             }
-            cursor.close()
-            db.close()
             return jsonify(data), 400
 
     # 伺服器錯誤
@@ -115,9 +117,10 @@ def signin():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        return jsonify(data), 500
+    finally:
         cursor.close()
         db.close()
-        return jsonify(data), 500
 
 # 登出功能
 @userApi.route('/user', methods=['DELETE'])

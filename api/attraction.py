@@ -1,15 +1,14 @@
 from flask import *
 import mysql.connector
-
-# db = mysql.connector.connect(
-#     host='localhost',
-#     port='3306',
-#     user='abc',
-#     password='abc',
-#     database='taipeidata'
-# )
-
 from mysql.connector import pooling
+
+# 讀取.env的隱藏資料
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+dbUser = os.getenv("dbUser")
+dbPassword = os.getenv("dbPassword")
 
 
 connection_pool = pooling.MySQLConnectionPool(pool_name="db",
@@ -17,13 +16,9 @@ connection_pool = pooling.MySQLConnectionPool(pool_name="db",
                                             pool_reset_session=True,
                                             host='localhost',
                                             database='taipeidata',
-                                            user='abc',
-                                            password='abc')
+                                            user=dbUser,
+                                            password=dbPassword)
 
-
-
-#dictionary轉換成字典
-# cursor = db.cursor(dictionary=True)
 
 attractionApi = Blueprint( 'attractionApi', __name__)
 

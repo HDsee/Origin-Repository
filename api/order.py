@@ -5,19 +5,27 @@ from datetime import date, datetime
 import requests
 from mysql.connector import pooling
 
+# 讀取.env的隱藏資料
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+tappayPartnerKey = os.getenv("tappayPartnerKey")
+tappayMerchantId = os.getenv("tappayMerchantId")
+dbUser = os.getenv("dbUser")
+dbPassword = os.getenv("dbPassword")
+
 connection_pool = pooling.MySQLConnectionPool(pool_name="db",
                                             pool_size=10,
                                             pool_reset_session=True,
                                             host='localhost',
                                             database='taipeidata',
-                                            user='abc',
-                                            password='abc')
+                                            user=dbUser,
+                                            password=dbPassword)
 
 
 
 orderApi = Blueprint( 'orderApi', __name__)
-
-
 
 # # 建立訂單
 @orderApi.route('/order', methods=["POST"])
@@ -40,10 +48,11 @@ def post_order():
             contactEmail = order["order"]["contact"]["email"]
             contactPhone = order["order"]["contact"]["phone"]
             user_id = session["id"]
+
             send_prime = {
                 "prime": prime,
-                "partner_key": "partner_pmYmTmdNBSUscQU8ulrzRGVp97GRyRkHac2NDLWthf8PyYH5baEcdSRn",
-                "merchant_id": "HDT_CTBC",
+                "partner_key": tappayPartnerKey,
+                "merchant_id": tappayMerchantId,
                 "order_number": order_number,
                 "details":"TapPay Test",
                 "amount": price,
@@ -58,7 +67,7 @@ def post_order():
             pay_url = 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
             headers = {
                 'Content-type': 'application/json',
-                'x-api-key': "partner_pmYmTmdNBSUscQU8ulrzRGVp97GRyRkHac2NDLWthf8PyYH5baEcdSRn"
+                'x-api-key': tappayPartnerKey
             }
             response = requests.post(pay_url, headers=headers, json=send_prime).json()
             res = response
@@ -68,7 +77,6 @@ def post_order():
                 cursor.execute('INSERT INTO `order` (number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contact_name,contact_email,contact_phone,status,user_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
                 (order_number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contactName,contactEmail,contactPhone,statusNum,user_id))
                 cursor.execute('delete from `booking` where user_id=%s',(user_id,))
-                db.commit()
                 data = {
                     "data":{
                         "number": order_number,
@@ -78,8 +86,6 @@ def post_order():
                         }
                     }
                 }
-                cursor.close()
-                db.close()
                 return jsonify(data)
 
             # TapPay回傳失敗資訊
@@ -92,8 +98,6 @@ def post_order():
                     }
                 }
             }
-            cursor.close()
-            db.close()
             return jsonify(data)
 
         # 沒有登入
@@ -101,8 +105,6 @@ def post_order():
             "error": True,
             "message": "未登入系統，操作失敗"
         }
-        cursor.close()
-        db.close()
         return jsonify(data), 403
 
     # 伺服器（資料庫）連線失敗
@@ -112,7 +114,9 @@ def post_order():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        return jsonify(data), 500
+    finally:
+        db.commit()
         cursor.close()
         db.close()
-        return jsonify(data), 500
 

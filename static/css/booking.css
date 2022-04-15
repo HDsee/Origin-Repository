@@ -324,6 +324,15 @@ main{
     height: 35px;
 }
 
+.tpfield-num,.tpfield-exp,.tpfield-ccv{
+    width: 200px;
+    padding: 10px;
+    border:1px solid #E8E8E8;
+    border-radius: 5px;
+    height: 35px;
+}
+
+
 
 
 .price-info>p{
