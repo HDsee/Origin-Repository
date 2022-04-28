@@ -31,6 +31,8 @@ const bookingTime = bookingContainer.querySelector('.booking-time')
 const bookingPrice = bookingContainer.querySelector('.booking-price')
 const bookingAddress = bookingContainer.querySelector('.booking-address')
 const totalPrice = orderForm.querySelector('.total-price')
+const errorMs = orderForm.querySelector('.error-messeage')
+
 const trip=[]
 
 function getBookingInfo(){
@@ -154,7 +156,7 @@ function orderSend (e) {
     e.preventDefault()
     // 取得 TapPay Fields 的 status
     const tappayStatus = TPDirect.card.getTappayFieldsStatus()
-    // console.log(tappayStatus)
+    console.log(tappayStatus)
     // 確認是否可以 getPrime
     if (tappayStatus.canGetPrime === false) {
         console.log('can not get prime');

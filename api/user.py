@@ -1,11 +1,15 @@
+from ast import pattern
 from flask import *
 from flask import session
 import mysql.connector
 from mysql.connector import pooling
+import re
 
 # 讀取.env的隱藏資料
 from dotenv import load_dotenv
 import os
+
+from sqlalchemy import null
 
 load_dotenv()
 dbUser = os.getenv("dbUser")
@@ -56,13 +60,20 @@ def signup():
         cursor = db.cursor()
         cursor.execute('select * from `member` where email=%s',(email,))
         user = cursor.fetchone()
-        
-        # 註冊成功
-        if not user:
-            cursor.execute('INSERT INTO `member` (name,email,password) VALUES (%s,%s,%s)',(name,email,password))
-            data = {"ok": True}
-            return jsonify(data), 200
 
+        #驗證資料
+        if (not user) and (name != None) and (password != None):
+            pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+            if re.fullmatch(pattern, email):
+                cursor.execute('INSERT INTO `member` (name,email,password) VALUES (%s,%s,%s)',(name,email,password))
+                data = {"ok": True}
+                return jsonify(data), 200
+            data = {
+                "error": True,
+                "message": "註冊失敗，email、帳號、密碼格式錯誤"
+            }
+            db.rollback()
+            return jsonify(data), 400
         # email重複
         else:
             data = {
@@ -77,6 +88,7 @@ def signup():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        db.rollback()
         return jsonify(data), 500
     finally:
         db.commit()
@@ -93,22 +105,30 @@ def signin():
         password = data['password']
         db=connection_pool.get_connection()
         cursor = db.cursor()
-        cursor.execute('select * from `member` where email=%s and password=%s',(email,password))
-        user = cursor.fetchone()
-        # 登入成功
-        if user:
-            session['id'] = user[0]
-            session['user'] = user[1]
-            session['email'] = user[2]
-            data = {"ok": True}
-            return jsonify(data)
-
-        # 登入失敗
+        pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if (re.fullmatch(pattern, email)) and (password != None):
+            cursor.execute('select * from `member` where email=%s and password=%s',(email,password))
+            user = cursor.fetchone()
+            # 登入成功
+            if user:
+                session['id'] = user[0]
+                session['user'] = user[1]
+                session['email'] = user[2]
+                data = {"ok": True}
+                return jsonify(data)
+            # 登入失敗
+            else:
+                data = {
+                    "error": True,
+                    "message": "信箱或密碼輸入錯誤"
+                }
+                return jsonify(data), 400
         else:
             data = {
                 "error": True,
-                "message": "信箱或密碼輸入錯誤"
+                "message": "登入失敗，email或密碼格式錯誤"
             }
+            db.rollback()
             return jsonify(data), 400
 
     # 伺服器錯誤

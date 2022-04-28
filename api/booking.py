@@ -115,6 +115,7 @@ def post_booking():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        db.rollback()
         return jsonify(data), 500
     finally:
         db.commit()
@@ -142,6 +143,7 @@ def delete_booking():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        db.rollback()
         return jsonify(data), 500
     finally:
         db.commit()

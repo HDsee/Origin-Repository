@@ -316,7 +316,7 @@ main{
     align-items: center;
 }
 
-.order :is(input, .tpfield-num,.tpfield-exp,.tpfield-ccv){
+.order :is(input){
     width: 200px;
     padding: 10px;
     border:1px solid #E8E8E8;
@@ -327,9 +327,10 @@ main{
 .tpfield-num,.tpfield-exp,.tpfield-ccv{
     width: 200px;
     padding: 10px;
-    border:1px solid #E8E8E8;
+    border:1px solid ;
     border-radius: 5px;
     height: 35px;
+    font-size: 14px;
 }
 
 
