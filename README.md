@@ -34,3 +34,9 @@ Test Credit Card for Payment
 * MySQL uses the connection pool and set index to optimize the query
 * Use Git/GitHub for version control
 * Third-Party Payment System: TapPay
+
+### Contact
+
+👨🏻‍💻 蔡懷德 Huai De Tsai
+
+📬 Email : huaide_tasi@outlook.com
