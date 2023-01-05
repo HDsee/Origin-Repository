@@ -1,35 +1,12 @@
-from ast import pattern
 from flask import *
 from flask import session
-import mysql.connector
-from mysql.connector import pooling
+from connector import connection_pool
 import re
 
-# 讀取.env的隱藏資料
-from dotenv import load_dotenv
-import os
-
-from sqlalchemy import null
-
-load_dotenv()
-dbUser = os.getenv("dbUser")
-dbPassword = os.getenv("dbPassword")
-
-connection_pool = pooling.MySQLConnectionPool(pool_name="db",
-                                            pool_size=10,
-                                            pool_reset_session=True,
-                                            host='localhost',
-                                            database='taipeidata',
-                                            user=dbUser,
-                                            password=dbPassword)
-
-
 userApi = Blueprint( 'userApi', __name__)
-
-
 #取得當前使用者資訊
 @userApi.route('/user', methods=['GET'])
-def api_user():
+def status():
     # 登入中
     if "user" in session:
         id = session['id']
@@ -144,7 +121,7 @@ def signin():
 
 # 登出功能
 @userApi.route('/user', methods=['DELETE'])
-def singout():
+def signout():
     # 登出
     data = {"ok": True}
     session.pop('user')

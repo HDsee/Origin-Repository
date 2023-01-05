@@ -112,13 +112,3 @@ window.addEventListener('scroll', debounce(nextPage))
 
 // 進行keword搜尋
 findkeyword.addEventListener('submit', find)
-
-function getWeather(){
-    fetch(
-        'https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-14226582-4648-4042-A2AC-0DF48923499D'
-      )
-        .then((response) => response.json())
-        .then((data) => console.log('data', data));
-}
-
-getWeather()

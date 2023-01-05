@@ -1,27 +1,8 @@
 from flask import *
-import mysql.connector
-from mysql.connector import pooling
-
-# 讀取.env的隱藏資料
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-dbUser = os.getenv("dbUser")
-dbPassword = os.getenv("dbPassword")
-
-
-connection_pool = pooling.MySQLConnectionPool(pool_name="db",
-                                            pool_size=10,
-                                            pool_reset_session=True,
-                                            host='localhost',
-                                            database='taipeidata',
-                                            user=dbUser,
-                                            password=dbPassword)
-
+from flask import session
+from connector import connection_pool
 
 attractionApi = Blueprint( 'attractionApi', __name__)
-
 
 #用page&keyword取得景點資料列表
 @attractionApi.route('/attractions')
@@ -65,9 +46,9 @@ def api_attractions():
             return jsonify(attractions)
     except:
         return {
-			"error": True,
-			"message": "伺服器內部錯誤"
-		}, 500
+            "error": True,
+            "message": "伺服器內部錯誤"
+        }, 500
     finally:
         cursor.close()
         db.close()

@@ -1,35 +1,20 @@
-from encodings import utf_8
-import imp
 from flask import *
-import mysql.connector
+from flask import session
+from connector import connection_pool
+import re
 from datetime import date, datetime
 import requests
-from mysql.connector import pooling
-import re
 
-# 讀取.env的隱藏資料
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 tappayPartnerKey = os.getenv("tappayPartnerKey")
 tappayMerchantId = os.getenv("tappayMerchantId")
-dbUser = os.getenv("dbUser")
-dbPassword = os.getenv("dbPassword")
-
-connection_pool = pooling.MySQLConnectionPool(pool_name="db",
-                                            pool_size=10,
-                                            pool_reset_session=True,
-                                            host='localhost',
-                                            database='taipeidata',
-                                            user=dbUser,
-                                            password=dbPassword)
-
-
 
 orderApi = Blueprint( 'orderApi', __name__)
 
-# # 建立訂單
+#  建立訂單
 @orderApi.route('/order', methods=["POST"])
 def post_order():
     try:

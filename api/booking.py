@@ -1,25 +1,6 @@
 from flask import *
-import mysql.connector
-from mysql.connector import pooling
-
-# 讀取.env的隱藏資料
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-dbUser = os.getenv("dbUser")
-dbPassword = os.getenv("dbPassword")
-
-
-connection_pool = pooling.MySQLConnectionPool(pool_name="db",
-                                            pool_size=10,
-                                            pool_reset_session=True,
-                                            host='localhost',
-                                            database='taipeidata',
-                                            user=dbUser,
-                                            password=dbPassword)
-
-
+from flask import session
+from connector import connection_pool
 
 bookingApi = Blueprint( 'bookingApi', __name__)
 
