@@ -18,7 +18,6 @@ Test Credit Card for Payment
 * ccv: 123
 
 ## Lazy Loading
-![Untitled ‑ Made with FlexClip](https://user-images.githubusercontent.com/93437400/211190606-7eb412a3-e376-4a51-b0e1-0ec198dfa894.gif)
 
 ## Keyword Search
 
