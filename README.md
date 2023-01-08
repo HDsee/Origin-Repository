@@ -24,6 +24,7 @@ Test Credit Card for Payment
 ![Untitled ‑ Made with FlexClip](https://user-images.githubusercontent.com/93437400/211190850-2ee6de23-071d-407b-be14-0ef14884b726.gif)
 
 ## Image Carousel
+![Untitled ‑ Made with FlexClip (3)](https://user-images.githubusercontent.com/93437400/211191056-64826c5d-449d-4d35-896e-44ccddf7de7f.gif)
 
 ## Booking System
 
