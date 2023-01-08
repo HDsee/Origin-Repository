@@ -30,10 +30,11 @@ Test Credit Card for Payment
 ![Untitled ‑ Made with FlexClip (4)](https://user-images.githubusercontent.com/93437400/211191151-829685a7-3af0-4217-9cc1-10d83d281af1.gif)
 
 ## RWD
+![Untitled ‑ Made with FlexClip (6)](https://user-images.githubusercontent.com/93437400/211191221-5fcd9585-425b-455d-9cf8-fbe2ba7e5d8b.gif)
 
 ## Technique
 * Use Flask as server framework
-* Get the attractions' API by AJAX
+* Get the attractions API by AJAX
 * Design API by RESTful API style
 * MySQL uses the connection pool and set index to optimize the query
 * Use Git/GitHub for version control
