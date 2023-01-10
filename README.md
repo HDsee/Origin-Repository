@@ -35,9 +35,9 @@ Test Credit Card for Payment
 ## Technique
 * Use Flask as server framework
 * Get the attractions API by AJAX
-* Design API by RESTful API style
+* Build Member System with RESTful API.
+* Build Infinite Scroller and Carousel Slider with Pure JavaScript.
 * MySQL uses the connection pool and set index to optimize the query
-* Use Git/GitHub for version control
 * Deploy in AWS EC2.
 * Connect to Third party payment TapPay.
 
