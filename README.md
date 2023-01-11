@@ -4,7 +4,7 @@ Taipei-day-trip-website is an e-commerce website that provides reservations for 
 
 ## Demo
 
-Website URL : http://127.0.0.1:3000/
+Website URL : http://52.196.8.24:3000/
 
 Test account:
 
