@@ -1,18 +1,6 @@
 from flask import *
-import mysql.connector
-
-from mysql.connector import pooling
-
-
-connection_pool = pooling.MySQLConnectionPool(pool_name="db",
-                                            pool_size=10,
-                                            pool_reset_session=True,
-                                            host='localhost',
-                                            database='taipeidata',
-                                            user='abc',
-                                            password='abc')
-
-
+from flask import session
+from connector import connection_pool
 
 bookingApi = Blueprint( 'bookingApi', __name__)
 
@@ -43,29 +31,25 @@ def get_booking():
                         "time": bookingData["time"],
                         "price": bookingData["price"]
                     }}
-                    cursor.close()
-                    db.close()
                     return jsonify(data)
                 else:
                     {"data": None}
-                    cursor.close()
-                    db.close()
                     return jsonify(data)
         data = {
             "error": True,
             "message": "未登入系統，拒絕存取"
         }
-        cursor.close()
-        db.close()
         return jsonify(data),403
     except:
         data = {
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        return jsonify(data), 500
+    finally:
         cursor.close()
         db.close()
-        return jsonify(data), 500
+
 
 # 建立行程功能
 @bookingApi.route('/booking', methods=["POST"])
@@ -87,18 +71,12 @@ def post_booking():
                 if not bookingCheck:
                     cursor.execute('INSERT INTO `booking` (user_id,attraction_id,date,time,price) VALUES (%s,%s,%s,%s,%s)',
                     (userId,attractionId,date,time,price))
-                    db.commit()
                     data = {"ok": True}
-                    cursor.close()
-                    db.close()
                     return jsonify(data)
                 else:
                     mysql = 'UPDATE booking SET attraction_id=%s,date=%s,time=%s,price=%s WHERE user_id=%s'
                     cursor.execute(mysql, (attractionId,date,time,price,userId))
-                    db.commit()
                     data = {"ok": True}
-                    cursor.close()
-                    db.close()  
                     return jsonify(data)
             # 輸入內容有誤
             data = {
@@ -111,8 +89,6 @@ def post_booking():
             "error": True,
             "message": "未登入系統，拒絕存取"
         }
-        cursor.close()
-        db.close()
         return jsonify(data), 403
     # 伺服器錯誤
     except:
@@ -120,9 +96,12 @@ def post_booking():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        db.rollback()
+        return jsonify(data), 500
+    finally:
+        db.commit()
         cursor.close()
         db.close()
-        return jsonify(data), 500
 
 # 刪除行程功能
 @bookingApi.route('/booking', methods=["DELETE"])
@@ -133,24 +112,22 @@ def delete_booking():
         if "user" in session:
             UserId = session["id"]
             cursor.execute('delete from `booking` where user_id=%s',(UserId,))
-            db.commit()
             data = {"ok": True}
-            cursor.close()
-            db.close()
             return jsonify(data)
         data = {
             "error": True,
             "message": "未登入系統，拒絕存取"
         }
-        cursor.close()
-        db.close()
         return jsonify(data), 403
     except:
         data = {
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        db.rollback()
+        return jsonify(data), 500
+    finally:
+        db.commit()
         cursor.close()
         db.close()
-        return jsonify(data), 500
 

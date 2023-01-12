@@ -1,25 +1,12 @@
 from flask import *
 from flask import session
-import mysql.connector
-
-from mysql.connector import pooling
-
-
-connection_pool = pooling.MySQLConnectionPool(pool_name="db",
-                                            pool_size=10,
-                                            pool_reset_session=True,
-                                            host='localhost',
-                                            database='taipeidata',
-                                            user='abc',
-                                            password='abc')
-
+from connector import connection_pool
+import re
 
 userApi = Blueprint( 'userApi', __name__)
-
-
 #取得當前使用者資訊
 @userApi.route('/user', methods=['GET'])
-def api_user():
+def status():
     # 登入中
     if "user" in session:
         id = session['id']
@@ -50,22 +37,26 @@ def signup():
         cursor = db.cursor()
         cursor.execute('select * from `member` where email=%s',(email,))
         user = cursor.fetchone()
-        # 註冊成功
-        if not user:
-            cursor.execute('INSERT INTO `member` (name,email,password) VALUES (%s,%s,%s)',(name,email,password))
-            db.commit()
-            data = {"ok": True}
-            cursor.close()
-            db.close()
-            return jsonify(data), 200
+
+        #驗證資料
+        if (not user) and (name != None) and (password != None):
+            pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+            if re.fullmatch(pattern, email):
+                cursor.execute('INSERT INTO `member` (name,email,password) VALUES (%s,%s,%s)',(name,email,password))
+                data = {"ok": True}
+                return jsonify(data), 200
+            data = {
+                "error": True,
+                "message": "註冊失敗，email、帳號、密碼格式錯誤"
+            }
+            db.rollback()
+            return jsonify(data), 400
         # email重複
         else:
             data = {
                 "error": True,
                 "message": "註冊失敗，重複的email"
             }
-            cursor.close()
-            db.close()
             return jsonify(data), 400
 
     # 伺服器錯誤
@@ -74,9 +65,13 @@ def signup():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        db.rollback()
+        return jsonify(data), 500
+    finally:
+        db.commit()
         cursor.close()
         db.close()
-        return jsonify(data), 500
+    
 
 # 登入功能
 @userApi.route('/user', methods=['PATCH'])
@@ -87,26 +82,30 @@ def signin():
         password = data['password']
         db=connection_pool.get_connection()
         cursor = db.cursor()
-        cursor.execute('select * from `member` where email=%s and password=%s',(email,password))
-        user = cursor.fetchone()
-        # 登入成功
-        if user:
-            session['id'] = user[0]
-            session['user'] = user[1]
-            session['email'] = user[2]
-            data = {"ok": True}
-            cursor.close()
-            db.close()
-            return jsonify(data)
-
-        # 登入失敗
+        pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if (re.fullmatch(pattern, email)) and (password != None):
+            cursor.execute('select * from `member` where email=%s and password=%s',(email,password))
+            user = cursor.fetchone()
+            # 登入成功
+            if user:
+                session['id'] = user[0]
+                session['user'] = user[1]
+                session['email'] = user[2]
+                data = {"ok": True}
+                return jsonify(data)
+            # 登入失敗
+            else:
+                data = {
+                    "error": True,
+                    "message": "信箱或密碼輸入錯誤"
+                }
+                return jsonify(data), 400
         else:
             data = {
                 "error": True,
-                "message": "信箱或密碼輸入錯誤"
+                "message": "登入失敗，email或密碼格式錯誤"
             }
-            cursor.close()
-            db.close()
+            db.rollback()
             return jsonify(data), 400
 
     # 伺服器錯誤
@@ -115,13 +114,14 @@ def signin():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        return jsonify(data), 500
+    finally:
         cursor.close()
         db.close()
-        return jsonify(data), 500
 
 # 登出功能
 @userApi.route('/user', methods=['DELETE'])
-def singout():
+def signout():
     # 登出
     data = {"ok": True}
     session.pop('user')

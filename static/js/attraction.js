@@ -168,3 +168,15 @@ function bookingStart(e){
 }
 
 bookingForm.addEventListener('submit', bookingStart)
+
+
+//加上屬性min限制只能選擇明天之後的日期
+const date = new Date();
+const year = date.getFullYear();
+const month = ('0'+ (date.getMonth() + 1)).slice(-2);
+const day = ('0' + (date.getDate() + 1)).slice(-2);
+const time = year +'-'+ month +'-'+ day;
+// console.log(time);
+
+document.getElementById('date').value = time;
+document.getElementById('date').setAttribute('min', time);

@@ -1,25 +1,20 @@
-from encodings import utf_8
 from flask import *
-import mysql.connector
+from flask import session
+from connector import connection_pool
+import re
 from datetime import date, datetime
 import requests
-from mysql.connector import pooling
 
-connection_pool = pooling.MySQLConnectionPool(pool_name="db",
-                                            pool_size=10,
-                                            pool_reset_session=True,
-                                            host='localhost',
-                                            database='taipeidata',
-                                            user='abc',
-                                            password='abc')
+from dotenv import load_dotenv
+import os
 
-
+load_dotenv()
+tappayPartnerKey = os.getenv("tappayPartnerKey")
+tappayMerchantId = os.getenv("tappayMerchantId")
 
 orderApi = Blueprint( 'orderApi', __name__)
 
-
-
-# # 建立訂單
+#  建立訂單
 @orderApi.route('/order', methods=["POST"])
 def post_order():
     try:
@@ -40,60 +35,66 @@ def post_order():
             contactEmail = order["order"]["contact"]["email"]
             contactPhone = order["order"]["contact"]["phone"]
             user_id = session["id"]
-            send_prime = {
-                "prime": prime,
-                "partner_key": "partner_pmYmTmdNBSUscQU8ulrzRGVp97GRyRkHac2NDLWthf8PyYH5baEcdSRn",
-                "merchant_id": "HDT_CTBC",
-                "order_number": order_number,
-                "details":"TapPay Test",
-                "amount": price,
-                "cardholder": {
-                    "phone_number": contactPhone,
-                    "name": contactName,
-                    "email": contactEmail
-                },
-                "remember": False
-            }
-            # 將訂單傳送至TapPay並獲取回應
-            pay_url = 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
-            headers = {
-                'Content-type': 'application/json',
-                'x-api-key': "partner_pmYmTmdNBSUscQU8ulrzRGVp97GRyRkHac2NDLWthf8PyYH5baEcdSRn"
-            }
-            response = requests.post(pay_url, headers=headers, json=send_prime).json()
-            res = response
-            statusNum = res["status"]
-            # 當回傳結果為付款成功時，回傳建立成功資訊
-            if res["status"] == 0:
-                cursor.execute('INSERT INTO `order` (number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contact_name,contact_email,contact_phone,status,user_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
-                (order_number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contactName,contactEmail,contactPhone,statusNum,user_id))
-                cursor.execute('delete from `booking` where user_id=%s',(user_id,))
-                db.commit()
+            pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+            if (contactName != None) and (contactPhone != None) and (re.fullmatch(pattern, contactEmail)):
+                send_prime = {
+                    "prime": prime,
+                    "partner_key": tappayPartnerKey,
+                    "merchant_id": tappayMerchantId,
+                    "order_number": order_number,
+                    "details":"TapPay Test",
+                    "amount": price,
+                    "cardholder": {
+                        "phone_number": contactPhone,
+                        "name": contactName,
+                        "email": contactEmail
+                    },
+                    "remember": False
+                }
+                # 將訂單傳送至TapPay並獲取回應
+                pay_url = 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
+                headers = {
+                    'Content-type': 'application/json',
+                    'x-api-key': tappayPartnerKey
+                }
+                response = requests.post(pay_url, headers=headers, json=send_prime).json()
+                res = response
+                statusNum = res["status"]
+                # 當回傳結果為付款成功時，回傳建立成功資訊
+                if res["status"] == 0:
+                    cursor.execute('INSERT INTO `order` (number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contact_name,contact_email,contact_phone,status,user_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
+                    (order_number,price,attraction_id,attraction_name,attraction_address,attraction_image,date,time,contactName,contactEmail,contactPhone,statusNum,user_id))
+                    cursor.execute('delete from `booking` where user_id=%s',(user_id,))
+                    data = {
+                        "data":{
+                            "number": order_number,
+                            "payment": {
+                                "status": 0,
+                                "message": "付款成功"
+                            }
+                        }
+                    }
+                    return jsonify(data)
+
+                # TapPay回傳失敗資訊
                 data = {
                     "data":{
                         "number": order_number,
                         "payment": {
-                            "status": 0,
-                            "message": "付款成功"
+                            "status": res["status"],
+                            "message": "付款失敗"
                         }
                     }
                 }
-                cursor.close()
-                db.close()
                 return jsonify(data)
-
-            # TapPay回傳失敗資訊
             data = {
-                "data":{
-                    "number": order_number,
-                    "payment": {
-                        "status": res["status"],
-                        "message": "付款失敗"
+                    "data":{
+                        "number": order_number,
+                        "payment": {
+                            "message": "聯絡資訊錯誤"
+                        }
                     }
                 }
-            }
-            cursor.close()
-            db.close()
             return jsonify(data)
 
         # 沒有登入
@@ -101,8 +102,6 @@ def post_order():
             "error": True,
             "message": "未登入系統，操作失敗"
         }
-        cursor.close()
-        db.close()
         return jsonify(data), 403
 
     # 伺服器（資料庫）連線失敗
@@ -112,7 +111,10 @@ def post_order():
             "error": True,
             "message": "伺服器內部錯誤"
         }
+        db.rollback()
+        return jsonify(data), 500
+    finally:
+        db.commit()
         cursor.close()
         db.close()
-        return jsonify(data), 500
 
