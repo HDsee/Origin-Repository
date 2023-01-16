@@ -2,17 +2,26 @@
 import urllib.request as request
 import json
 import mysql.connector
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+rdsHost = os.getenv("rdsHost")
+rdsDatabease = os.getenv("rdsDatabase")
+rdsUser = os.getenv("rdsUser")
+rdsPassword = os.getenv("rdsPassword")
 
 db = mysql.connector.connect(
-    host='localhost',
-    port='3306',
-    user='root',
-    password='root',
-    database='taipeidata'
+    host=rdsHost,
+    user=rdsUser,
+    password=rdsPassword,
+    database=rdsDatabease,
+    port=3306
 )
 
 cursor = db.cursor()
-url = 'data/taipei-attractions.json'
+url = 'taipei-attractions.json'
 
 with open(url, mode='r', encoding='utf-8') as response:
     data = json.load(response)
